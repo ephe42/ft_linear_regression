@@ -3,15 +3,15 @@
 
 import numpy as np
 import os
+import sys
 
 def main():
 	try:
 		x = int(input("Enter the kilometres: "))
 	except:
-		print("Error")
-		exit(1)
+		sys.exit("Error")
 	try:
-		if os.path.isfile("theta.csv") and os.stat("theta.csv").st_size > 0:
+		if os.stat("theta.csv").st_size > 0:
 			theta = np.loadtxt("theta.csv", dtype = float)
 			if (len(theta) >= 2):
 				print("Estimated price: " + str(theta[0] + theta[1] * x))

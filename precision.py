@@ -3,18 +3,18 @@
 
 import numpy as np
 import os
+import sys
 
 def checkError():
 	try:
-		if (os.path.isfile("data.csv") and os.stat("data.csv").st_size > 0) and os.path.isfile("theta.csv") and os.stat("theta.csv").st_size > 0:
+		if os.stat("data.csv").st_size > 0 and os.stat("theta.csv").st_size > 0:
 			data = np.loadtxt("data.csv", dtype = float, delimiter = ",", skiprows = 1)
 			theta = np.loadtxt("theta.csv", dtype = float)
 			if (len(data[:, 0]) >= 2 and len(theta) >= 2):
 				return [data, theta]
 	except:
 		pass
-	print("Error")
-	exit(1)
+	sys.exit("Error")
 
 if __name__ == "__main__":
 	[data, theta] = checkError()

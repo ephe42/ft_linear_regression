@@ -4,6 +4,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import sys
 
 def showGraph(x, y, predict):
 	plt.title("price of a car according to its kilometers")
@@ -65,19 +66,14 @@ def linearRegression(x, y):
 	y = destandardization(y, meanY, stdY)
 	return [x, y, predict]
 
-def checkError():
-	try:
-		if (os.path.isfile("data.csv") and os.stat("data.csv").st_size > 0):
-			data = np.loadtxt("data.csv", dtype = float, delimiter = ",", skiprows = 1)
-			if (len(data[:, 0]) >= 2):
-				return data
-	except:
-		pass
-	print("Error")
-	exit(1)
-
 if __name__ == "__main__":
-	data = checkError()
+	try:
+		if os.stat("data.csv").st_size > 0:
+			data = np.loadtxt("data.csv", dtype = str, delimiter = ",")
+		else:
+			sys.exit("Error")
+	except:
+		sys.exit("Error")
 	[x, y, predict] = linearRegression(data[:, 0], data[:, 1])
 	showGraph(x, y, predict)
 	theta1 = (predict[0] - predict[1]) / (x[0] - x[1])
