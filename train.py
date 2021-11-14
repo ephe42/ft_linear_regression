@@ -20,15 +20,16 @@ def destandardization(data, mean, std):
 	return data
 
 def gradientDescent(x, y, theta0, theta1):
-	for i in range(0, 100):
+	alpha = 0.1
+	m = len(x)
+	for _ in range(1000):
 		tmpTheta0 = 0
 		tmpTheta1 = 0
-		learningRateAlpha = 0.1
-		for i in range(0, len(x)):
+		for i in range(0, m):
 			tmpTheta0 += theta0 + theta1 * x[i] - y[i]
 			tmpTheta1 += (theta0 + theta1 * x[i] - y[i]) * x[i]
-		theta0 -= learningRateAlpha * (1 / len(x)) * tmpTheta0
-		theta1 -= learningRateAlpha * (1 / len(x)) * tmpTheta1
+		theta0 -= (alpha / m) * tmpTheta0
+		theta1 -= (alpha / m) * tmpTheta1
 	return [theta0, theta1]
 
 def standardization(data, mean, std):
@@ -69,7 +70,7 @@ def linearRegression(x, y):
 if __name__ == "__main__":
 	try:
 		if os.stat("data.csv").st_size > 0:
-			data = np.loadtxt("data.csv", dtype = str, delimiter = ",")
+			data = np.loadtxt("data.csv", dtype = float, delimiter = ",", skiprows = 1)
 		else:
 			sys.exit("Error")
 	except:
